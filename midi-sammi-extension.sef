@@ -1,0 +1,34 @@
+[extension_name]
+Midi Sammi Extension
+
+[extension_info]
+version 0.0.1 by Swolekat
+[insert_external]
+
+[insert_command]
+SAMMI.extCommand('Midi Trigger', 3355443, 52, {
+  type: ['Type', 19, 'C4', null, null],
+});
+startListeningToMidi();
+[insert_hook]
+
+[insert_script]
+        // const trigger = `VNyan ${message}`;
+        // SAMMI.triggerExt(trigger);
+function onMIDIInit() {
+    console.log('init');
+}
+
+function onMIDISystemError(e) {
+    console.log('error');
+    console.log(e);
+}
+
+function startListeningToMidi(){
+    console.log('hell');
+    navigator.requestMIDIAccess().then(
+        onMIDIInit,
+        onMIDISystemError );
+}
+
+[insert_over]
