@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="div">
+
+    </div>
+    <script src='https://cwilso.github.io/WebMIDIAPIShim/build/WebMIDIAPI.min.js'></script>
+    <script>
+        const div = document.getElementById('div');
+        function onMIDIInit() {
+            div.innerHTML = 'init';
+        }
+
+        function onMIDISystemError(e) {
+            div.innerHTML = 'error';
+            console.log(e.message);
+        }
+
+        function startListeningToMidi(){
+            div.innerHTML = 'starting';
+            navigator.requestMIDIAccess().then(
+                onMIDIInit,
+                onMIDISystemError );
+        }
+
+        startListeningToMidi();
+    </script>
+</body>
+</html>
