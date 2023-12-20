@@ -17,11 +17,37 @@
     <div id="div">
 
     </div>
-    <script src='https://cwilso.github.io/WebMIDIAPIShim/build/WebMIDIAPI.min.js'></script>
     <script>
         const div = document.getElementById('div');
-        function onMIDIInit() {
+        let midi;
+
+        const numberToNoteArray = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+        const numberToNoteValue = (number) => {
+            const numberMinusOctave = number % 12;
+            const octave = Math.floor(number/12);
+            const note = numberToNoteArray[numberMinusOctave];
+            return `${note}${octave}`;
+        };
+
+        function onMIDIMessage(event) {
+            const [command, note, velocity] = event.data;
+            const humanReadableNote = numberToNoteValue(note);
+            if(command === 144){
+                console.log(`Note on ${humanReadableNote}`);
+            }
+            if(command === 128){
+                console.log(`Note off ${humanReadableNote}`);
+            }
+        }
+
+
+        function onMIDIInit(midiAccess) {
             div.innerHTML = 'init';
+            midi = midiAccess;
+            midiAccess.inputs.forEach((input) => {
+                input.onmidimessage = onMIDIMessage;
+            })
         }
 
         function onMIDISystemError(e) {
