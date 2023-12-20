@@ -17,7 +17,7 @@ startListeningToMidi();
 
         const numberToNoteValue = (number) => {
             const numberMinusOctave = number % 12;
-            const octave = Math.floor(number/12);
+            const octave = Math.floor(number/12) - 1;
             const note = numberToNoteArray[numberMinusOctave];
             return `${note}${octave}`;
         };
