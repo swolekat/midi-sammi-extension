@@ -2,7 +2,7 @@
 Midi Sammi Extension
 
 [extension_info]
-version 0.0.2 by Swolekat
+version 0.0.3 by Swolekat
 [insert_external]
 
 [insert_command]
@@ -25,6 +25,7 @@ startListeningToMidi();
         function onMIDIMessage(event) {
             const [command, note, velocity] = event.data;
             const humanReadableNote = numberToNoteValue(note);
+            console.log(`MIDI info: command-> ${command} note->${humanReadableNote} velocity->${velocity}`);
             if(command === 144){
                 SAMMI.triggerExt('Midi Note On', {note: humanReadableNote});
                 SAMMI.triggerExt(`Midi Note On ${humanReadableNote}`, {note: humanReadableNote});
